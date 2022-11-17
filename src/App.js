@@ -1,25 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import Card from './components/Card';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main
+      style={{
+        backgroundImage: `url("https://source.unsplash.com/${window.screen.width}x${window.screen.height}/?landscape")`,
+      }}
+      className='bg-slate-900 flex items-center justify-center min-h-screen bg-no-repeat bg-center bg-fixed'
+    >
+      <Card />
+    </main>
   );
-}
+};
 
 export default App;
