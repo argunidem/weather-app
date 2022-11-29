@@ -28,3 +28,7 @@ input[type='search']::-webkit-search-results-decoration {
   animation-timing-function: linear;
   animation-fill-mode: forwards;
 }
+
+button svg {
+  pointer-events: none;
+}
