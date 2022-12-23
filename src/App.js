@@ -5,6 +5,7 @@ const App = () => {
   const [city, setCity] = React.useState('warsaw');
   const [weatherData, setWeatherData] = React.useState();
   const [loading, setLoading] = React.useState(true);
+  const [isError, setIsError] = React.useState(false);
 
   const [search, setSearch] = React.useState(false);
 
@@ -16,12 +17,24 @@ const App = () => {
     setCity(e.target.value);
   };
   const getWeatherCondition = async () => {
-    const res = await fetch(
+    await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=710a2f9c3b4106617ad20f5b29df1018&units=metric`
-    );
-    const data = await res.json();
-
-    setWeatherData(data);
+    )
+      .then((response) => {
+        if (response.status !== 200) {
+          throw new Error('Bad response from server!');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setWeatherData(data);
+      })
+      .catch((error) => {
+        setIsError(true);
+        setTimeout(() => {
+          setIsError(false);
+        }, 2000);
+      });
     setLoading(false);
   };
 
@@ -64,8 +77,12 @@ const App = () => {
                 type='search'
                 className={`placeholder:text-sm placeholder:font-medium text-black rounded-l-lg focus:outline-none ${
                   search ? 'w-full px-4 py-2' : 'w-0'
+                } ${
+                  isError
+                    ? 'placeholder:text-red-500 border-2 border-red-700'
+                    : 'placeholder:text-gray-400'
                 }`}
-                placeholder='Search'
+                placeholder={isError ? `We couldn't find the city!` : 'Search'}
                 onChange={changeHandler}
                 onKeyDown={keyDown}
                 value={city}
