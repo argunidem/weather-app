@@ -61,17 +61,19 @@ const App = () => {
         setTimeout(() => {
           setData(res.data);
           setLoading(false);
-        }, 1000);
+        }, 500);
       })
       .catch((error) => {
         setLoading(false);
         setErrorMsg(error);
+        setAnimate(true);
       });
   }, [location]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setErrorMsg('');
+      setAnimate(false);
     }, 2000);
 
     return () => clearTimeout(timer);
@@ -80,9 +82,9 @@ const App = () => {
   // if data is not true show the loader
   if (!data) {
     return (
-      <div>
+      <div className='w-full h-screen bg-gradientBg bg-no-repeat bg-cover bg-center flex flex-col justify-center items-center'>
         <div>
-          <ImSpinner8 className='text-5xl animate-spin' />
+          <ImSpinner8 className='text-5xl animate-spin text-white' />
         </div>
       </div>
     );
@@ -99,16 +101,16 @@ const App = () => {
       icon = <BsCloudHaze2Fill />;
       break;
     case 'Rain':
-      icon = <IoMdRainy />;
+      icon = <IoMdRainy className='text-sky-300' />;
       break;
     case 'Clear':
-      icon = <IoMdSunny />;
+      icon = <IoMdSunny className='text-yellow-300' />;
       break;
     case 'Drizzle':
-      icon = <BsCloudDrizzleFill />;
+      icon = <BsCloudDrizzleFill className='text-sky-400' />;
       break;
     case 'Snow':
-      icon = <IoMdSnow />;
+      icon = <IoMdSnow className='text-sky-200' />;
       break;
     case 'Thunderstorm':
       icon = <IoMdThunderstorm />;
@@ -122,12 +124,16 @@ const App = () => {
 
   return (
     <div className='w-full h-screen bg-gradientBg bg-no-repeat bg-cover bg-center flex flex-col items-center justify-center px-4 lg:px-0'>
-      {errorMsg && <div>{`${errorMsg.response.data.message}`}</div>}
+      <div
+        className={`${
+          !errorMsg ? '-translate-y-32' : 'translate-y-0'
+        } w-full max-w-[90vw] lg:max-w-[450px] bg-rose-700 text-white absolute top-8 lg:top-16 p-4 capitalize rounded-md duration-300`}
+      >{`${errorMsg && errorMsg.response.data.message}`}</div>
       {/* Form */}
       <form
-        className={`${
-          animate ? 'animate-shake' : 'animate-none'
-        } h-16 bg-black/30 w-full max-w-md rounded-full backdrop-blur-[32px] mb-8`}
+        className={`${animate ? 'animate-shake' : 'animate-none'} ${
+          !errorMsg ? 'border-none' : 'border border-rose-600'
+        } h-16 bg-black/20 w-full max-w-md rounded-full backdrop-blur-[32px] mb-8`}
       >
         <div className='h-full relative flex items-center justify-between p-2'>
           <input
@@ -139,14 +145,14 @@ const App = () => {
           />
           <button
             onClick={(e) => handleSubmit(e)}
-            className='bg-[#1ab9ed] hover:bg-[#15abdd] w-20 h-12 rounded-full flex justify-center items-center transiton'
+            className='bg-slate-50 hover:bg-slate-200 duration-200 w-20 h-12 rounded-full flex justify-center items-center transiton'
           >
-            <IoMdSearch className='text-2xl text-white' />
+            <IoMdSearch className='text-3xl text-black/80' />
           </button>
         </div>
       </form>
       {/* Card */}
-      <div className='w-full max-w-[450px] bg-black/20 min-h-[584px] text-white backdrop-blur-[32px] rounded-xl py-12 px-6'>
+      <div className='w-full max-w-[450px] bg-black/20 min-h-[584px] text-white backdrop-blur-xl rounded-xl py-12 px-6'>
         {loading ? (
           <div className='w-full h-full flex justify-center items-center'>
             <ImSpinner8 className='text-white text-5xl animate-spin' />
