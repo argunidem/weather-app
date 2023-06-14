@@ -7,3 +7,35 @@
     @apply font-primary;
   }
 }
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bg-gradient {
+  background-image: linear-gradient(
+    to right bottom,
+    #0f182f 12%,
+    #240606 28%,
+    #290808 34%,
+    #27093c 55%,
+    #2a2038 72%,
+    #2f1d46 82%,
+    #1e122f
+  );
+}
+
+.bg-gradient::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(-70deg, transparent 0%, #00000016 100%);
+}
+.bg-gradient::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(70deg, transparent 0%, #0000005b 100%);
+}
