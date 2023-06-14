@@ -79,7 +79,18 @@ const App = () => {
   return (
     <div className='w-full h-screen bg-gradientBg bg-no-repeat bg-cover bg-center flex flex-col items-center justify-center px-4 lg:px-0'>
       {/* Form */}
-      <form>form</form>
+      <form className='h-16 bg-black/30 w-full max-w-md rounded-full backdrop-blur-[32px] mb-8'>
+        <div className='h-full relative flex items-center justify-between p-2'>
+          <input
+            type='text'
+            className='flex-1 bg-transparent outline-none placeholder:text-white/60 text-white text-sm font-light pl-6 h-full'
+            placeholder='Search by city or country'
+          />
+          <button className='bg-[#1ab9ed] hover:bg-[#15abdd] w-20 h-12 rounded-full flex justify-center items-center transiton'>
+            <IoMdSearch className='text-2xl text-white' />
+          </button>
+        </div>
+      </form>
       {/* Card */}
       <div className='w-full max-w-[450px] bg-black/20 min-h-[584px] text-white backdrop-blur-[32px] rounded-xl py-12 px-6'>
         <div>
@@ -117,7 +128,54 @@ const App = () => {
             </div>
           </div>
           {/* Card Bottom */}
-          <div>card bottom</div>
+          <div className='max-w-sm mx-auto flex flex-col gap-y-6'>
+            <div className='flex justify-between'>
+              <div className='flex items-center gap-x-2'>
+                {/* Icon */}
+                <div className='text-xl'>
+                  <BsEye />
+                </div>
+                <div>
+                  Visibility
+                  <span className='ml-2'>{data.visibility / 1000} km</span>
+                </div>
+              </div>
+              <div className='flex items-center gap-x-2'>
+                {/* Icon */}
+                <div className='text-xl'>
+                  <BsThermometer />
+                </div>
+                <div className='flex'>
+                  Feels like
+                  <div className='flex ml-2'>
+                    {parseInt(data.main.feels_like)}
+                    <TbTemperatureCelsius />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className='flex justify-between'>
+              <div className='flex items-center gap-x-2'>
+                {/* Icon */}
+                <div className='text-xl'>
+                  <BsWater />
+                </div>
+                <div>
+                  Humidity
+                  <span className='ml-2'>{data.main.humidity} %</span>
+                </div>
+              </div>
+              <div className='flex items-center gap-x-2'>
+                {/* Icon */}
+                <div className='text-xl'>
+                  <BsWind />
+                </div>
+                <div>
+                  Wind <span className='ml-2'>{data.wind.speed} m/s</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
